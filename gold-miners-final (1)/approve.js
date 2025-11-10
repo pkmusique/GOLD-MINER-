@@ -1,0 +1,3 @@
+import { supabase } from '../../../lib/supabase'
+import { ADMIN_PASSWORD } from '../../../lib/constants'
+export default async function handler(req, res){ if(req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' }); const { id, action, password } = req.body; if(!ADMIN_PASSWORD) return res.status(500).json({ error: 'Server admin password not configured' }); if(password !== ADMIN_PASSWORD) return res.status(403).json({ error: 'Invalid admin password' }); const status = action === 'approve' ? 'Approved' : 'Rejected'; const { data, error } = await supabase.from('deposits').update({ status }).eq('id', id).select(); if(error) return res.status(500).json({ error: error.message }); return res.status(200).json(data[0]); }
