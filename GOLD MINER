@@ -1,0 +1,6 @@
+cd gold-miners-final
+git init
+git remote add origin https://github.com/<your-user>/gold-miners-demo.git
+git add .
+git commit -m "Initial commit"
+git push -u origin main
